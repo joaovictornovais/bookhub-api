@@ -1,0 +1,48 @@
+package br.com.joao.library.domain.book;
+
+import br.com.joao.library.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.beans.BeanUtils;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "books")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+    @Column(nullable = false)
+    private String author;
+    @Column(nullable = false)
+    private String publishing;
+    @Column(nullable = false)
+    private Integer pages;
+
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(
+            name = "book_category",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
+
+    public Book(BookDTO bookDTO) {
+        BeanUtils.copyProperties(bookDTO, this);
+    }
+
+}
