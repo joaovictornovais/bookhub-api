@@ -28,8 +28,6 @@ public class User {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
-    private String password;
 
     @OneToMany(mappedBy = "borrowedTo")
     private Set<Borrow> borrows = new HashSet<>();
