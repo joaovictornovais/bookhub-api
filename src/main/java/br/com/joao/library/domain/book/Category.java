@@ -3,6 +3,7 @@ package br.com.joao.library.domain.book;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,5 +25,9 @@ public class Category {
     @JsonBackReference
     @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new HashSet<>();
+
+    public Category(CategoryDTO categoryDTO) {
+        BeanUtils.copyProperties(categoryDTO, this);
+    }
 
 }

@@ -17,4 +17,8 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("ERROR: Category not found"));
     }
 
+    public Category createCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
 }
