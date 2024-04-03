@@ -1,8 +1,10 @@
 package br.com.joao.library.domain.user;
 
 import br.com.joao.library.domain.book.Book;
+import br.com.joao.library.domain.borrow.Borrow;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,5 +30,12 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "borrowedTo")
+    private Set<Borrow> borrows = new HashSet<>();
+
+    public User(UserDTO userDTO) {
+        BeanUtils.copyProperties(userDTO, this);
+    }
 
 }

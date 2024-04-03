@@ -4,8 +4,11 @@ import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.book.BookCategory;
 import br.com.joao.library.domain.book.BookCategoryDTO;
 import br.com.joao.library.domain.book.BookDTO;
+import br.com.joao.library.domain.borrow.Borrow;
+import br.com.joao.library.domain.borrow.BorrowDTO;
 import br.com.joao.library.services.BookCategoryService;
 import br.com.joao.library.services.BookService;
+import br.com.joao.library.services.BorrowService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +20,14 @@ public class BookController {
 
     private final BookService bookService;
     private final BookCategoryService bookCategoryService;
+    private final BorrowService borrowService;
 
-    public BookController(BookService bookService, BookCategoryService bookCategoryService) {
+    public BookController(BookService bookService,
+                          BookCategoryService bookCategoryService,
+                          BorrowService borrowService) {
         this.bookService = bookService;
         this.bookCategoryService = bookCategoryService;
+        this.borrowService = borrowService;
     }
 
     @GetMapping
@@ -47,6 +54,11 @@ public class BookController {
     public ResponseEntity<Book> removeCategory(@PathVariable Long id, @RequestBody BookCategoryDTO bookCategoryDTO) {
         bookCategoryService.removeCategory(id, bookCategoryDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/borrow")
+    public ResponseEntity<Borrow> borrowBook(@PathVariable Long id, @RequestBody BorrowDTO borrowDTO) {
+        return ResponseEntity.ok(borrowService.borrowBook(borrowDTO, id));
     }
 
 }

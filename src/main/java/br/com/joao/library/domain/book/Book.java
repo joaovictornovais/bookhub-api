@@ -1,5 +1,6 @@
 package br.com.joao.library.domain.book;
 
+import br.com.joao.library.domain.borrow.Borrow;
 import br.com.joao.library.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -41,8 +42,14 @@ public class Book {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @JsonManagedReference
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+    private Borrow borrow;
+
     public Book(BookDTO bookDTO) {
         BeanUtils.copyProperties(bookDTO, this);
     }
+
+
 
 }
