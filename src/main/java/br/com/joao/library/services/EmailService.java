@@ -1,7 +1,6 @@
 package br.com.joao.library.services;
 
 import br.com.joao.library.domain.email.Email;
-import br.com.joao.library.domain.email.StatusEmail;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,11 +29,7 @@ public class EmailService {
             helper.setSubject(email.getSubject());
             helper.setText(email.getText(), true);
             mailSender.send(message);
-
-            email.setStatusEmail(StatusEmail.SENT);
-        } catch (MessagingException e) {
-            email.setStatusEmail(StatusEmail.ERROR);
-        } catch (UnsupportedEncodingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
 

@@ -70,7 +70,6 @@ public class BorrowService {
         baseText = baseText.replace("[[CAPA]]", book.getCover());
 
         email.setText(baseText);
-
         emailService.sendEmail(email);
     }
 
