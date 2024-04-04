@@ -32,6 +32,8 @@ public class Book {
     private String publisher;
     @Column(nullable = false)
     private Integer pages;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String cover;
 
     @JsonManagedReference
     @ManyToMany
