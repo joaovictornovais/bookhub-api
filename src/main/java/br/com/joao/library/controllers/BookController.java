@@ -56,7 +56,7 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/borrow")
+    @PostMapping("/{id}/borrow")
     public ResponseEntity<Borrow> borrowBook(@PathVariable Long id, @RequestBody BorrowDTO borrowDTO) {
         return ResponseEntity.ok(borrowService.borrowBook(borrowDTO, id));
     }
