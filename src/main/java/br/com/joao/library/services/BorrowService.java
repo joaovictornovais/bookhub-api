@@ -28,14 +28,21 @@ public class BorrowService {
         User user = userService.findUser(userId.userId());
         Book book = bookService.findBookById(bookId);
 
-        if (user.getBorrows().size() > 3)
-            throw new RuntimeException("User already has 3 books borrowed");
+        if (findBorrowByBook(book) != null)
+            throw new RuntimeException("Book already borrowed");
+
+        if (user.getBorrows().size() == 3)
+            throw new RuntimeException("This user already borrowed 3 books");
 
         Borrow borrow = new Borrow();
         borrow.setDue(LocalDateTime.now().plusDays(30));
         borrow.setBorrowedTo(user);
         borrow.setBook(book);
         return borrowRepository.save(borrow);
+    }
+
+    public Borrow findBorrowByBook(Book book) {
+        return borrowRepository.findBorrowByBook(book);
     }
 
 }
