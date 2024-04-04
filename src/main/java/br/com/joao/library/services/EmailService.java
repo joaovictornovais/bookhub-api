@@ -37,6 +37,7 @@ public class EmailService {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+
     }
 
 }

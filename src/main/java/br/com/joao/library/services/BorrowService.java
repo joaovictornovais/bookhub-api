@@ -91,7 +91,6 @@ public class BorrowService {
         borrowRepository.deleteById(borrow.getId());
     }
 
-
     public Borrow findBorrowByBook(Book book) {
         return borrowRepository.findBorrowByBook(book);
     }

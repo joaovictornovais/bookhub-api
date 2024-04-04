@@ -3,6 +3,7 @@ package br.com.joao.library.domain.email;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
@@ -30,8 +31,8 @@ public class Email {
     }
 
     public Email() {
-        setOwnerRef("BookHub - Livraria");
-        setEmailFrom("joaovkt.novais@gmail.com");
+        this.ownerRef = "BookHub - Livraria";
+        this.emailFrom = System.getenv("MAIL_USERNAME");
     }
 
 }
