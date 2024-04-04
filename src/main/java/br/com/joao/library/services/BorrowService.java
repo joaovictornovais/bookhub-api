@@ -7,6 +7,7 @@ import br.com.joao.library.domain.email.Email;
 import br.com.joao.library.domain.user.User;
 import br.com.joao.library.repositories.BorrowRepository;
 import br.com.joao.library.util.emails.EmailBorrow;
+import br.com.joao.library.util.emails.EmailReturn;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,8 +32,14 @@ public class BorrowService {
         this.emailService = emailService;
     }
 
-    public Borrow findBorrow(Long id) {
-        return borrowRepository.findById(id).orElseThrow(() -> new RuntimeException("Borrow not found"));
+    public Email createEmail(String userEmail, String subject) {
+        return new Email(userEmail, subject);
+    }
+
+    public String editEmailBase(String emailBase, String firstName, String bookTitle, String bookCover) {
+        emailBase = emailBase.replace("[[NOME]]", firstName);
+        emailBase = emailBase.replace("[[TITULO]]", bookTitle);
+        return emailBase.replace("[[CAPA]]", bookCover);
     }
 
     public Borrow borrowBook(BorrowDTO userId, Long bookId) {
@@ -56,18 +63,19 @@ public class BorrowService {
     }
 
     public void emailBorrowBook(User user, Book book, Borrow borrow) {
-        Email email = new Email();
+        String subject = "Informações: Empréstimo do Livro " + book.getTitle();
+        Email email = createEmail(user.getEmail(), subject);
 
-        email.setEmailTo(user.getEmail());
-        email.setSubject("Informações: Empréstimo do Livro " + book.getTitle());
+        String baseText = editEmailBase(
+                EmailBorrow.borrow(),
+                user.getFirstName(),
+                book.getTitle(),
+                book.getCover());
 
-        String baseText = EmailBorrow.borrow();
-
-        baseText = baseText.replace("[[NOME]]", user.getFirstName());
-        baseText = baseText.replace("[[TITULO]]", book.getTitle());
-        baseText = baseText.replace("[[DATAEMPRESTIMO]]", borrow.getBorrowedIn().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        baseText = baseText.replace("[[DATADEVOLVER]]", borrow.getDue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        baseText = baseText.replace("[[CAPA]]", book.getCover());
+        baseText = baseText.replace("[[DATAEMPRESTIMO]]",
+                borrow.getBorrowedIn().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        baseText = baseText.replace("[[DATADEVOLVER]]",
+                borrow.getDue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         email.setText(baseText);
         emailService.sendEmail(email);
@@ -85,9 +93,24 @@ public class BorrowService {
         if (!Objects.equals(borrow.getBorrowedTo(), user.getEmail()))
             throw new RuntimeException("This user dont borrowed this book");
 
+        emailReturnBook(user, book, borrow);
+
         book.setBorrow(null);
         bookService.updateBook(book.getId(), book);
         borrowRepository.deleteById(borrow.getId());
+    }
+
+    public void emailReturnBook(User user, Book book, Borrow borrow) {
+        String subject = "Confirmação de Devolução: " + book.getTitle();
+        Email email = createEmail(user.getEmail(), subject);
+
+        String baseText = editEmailBase(EmailReturn.returnBook(), user.getFirstName(), book.getTitle(), book.getCover());
+
+        baseText = baseText.replace("[[DATAEMPRESTIMO]]", borrow.getBorrowedIn().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        baseText = baseText.replace("[[DATADEVOLVER]]", borrow.getDue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+        email.setText(baseText);
+        emailService.sendEmail(email);
     }
 
     public Borrow findBorrowByBook(Book book) {

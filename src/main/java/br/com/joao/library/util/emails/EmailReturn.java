@@ -1,13 +1,12 @@
 package br.com.joao.library.util.emails;
 
-public class EmailBorrow {
+public class EmailReturn {
 
-    public static String borrow() {
+    public static String returnBook() {
         return "<html lang=\"pt-br\">\n" +
                 "  <head>\n" +
                 "    <meta charset=\"UTF-8\" />\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n" +
-                "    <title>Lembrete de empréstimo de livro</title>\n" +
                 "    <style>\n" +
                 "      body {\n" +
                 "        font-family: Arial, sans-serif;\n" +
@@ -26,7 +25,7 @@ public class EmailBorrow {
                 "      .header {\n" +
                 "        text-align: center;\n" +
                 "        margin-bottom: 20px;\n" +
-                "        background: url(\"https://i.pinimg.com/originals/02/25/a4/0225a431e5b2637204873584848f3949.png\")\n" +
+                "        background: url(\"https://c4.wallpaperflare.com/wallpaper/286/891/609/anime-c-programming-blue-eyes-book-cover-hd-wallpaper-preview.jpg\")\n" +
                 "          no-repeat center center;\n" +
                 "        background-size: cover;\n" +
                 "        border-top-left-radius: 10px;\n" +
@@ -60,24 +59,21 @@ public class EmailBorrow {
                 "  <body>\n" +
                 "    <div class=\"container\">\n" +
                 "      <div class=\"header\">\n" +
-                "        <h2>Você pegou um livro emprestado na BookHub!</h2>\n" +
+                "        <h2>Confirmação de Devolução de Livro</h2>\n" +
                 "      </div>\n" +
                 "      <div class=\"content\">\n" +
                 "        <p>Prezado(a) [[NOME]],</p>\n" +
                 "        <p>\n" +
-                "          Você pegou emprestado o livro <strong>[[TITULO]]</strong> na Livraria\n" +
-                "          BookHub no dia\n" +
-                "          <strong>[[DATAEMPRESTIMO]]</strong> e deve devolver até o dia \n" +
-                "          <strong>[[DATADEVOLVER]]</strong>.\n" +
+                "          O livro <strong>[[TITULO]]</strong> foi devolvido com sucesso à\n" +
+                "          Livraria BookHub. Agradecemos por sua colaboração!\n" +
                 "        </p>\n" +
                 "        <div class=\"book-info\">\n" +
-                "          <img\n" +
-                "            class=\"book\"\n" +
-                "            src=\"[[CAPA]]\"\n" +
-                "            alt=\"[[TITULO]]\"\n" +
-                "          />\n" +
+                "          <img class=\"book\" src=\"[[CAPA]]\" alt=\"[[TITULO]]\" />\n" +
                 "        </div>\n" +
-                "        <p>Por favor, lembre-se de devolver o livro até a data especificada.</p>\n" +
+                "        <p>\n" +
+                "          Esperamos que tenha aproveitado a leitura. Se precisar de mais algum\n" +
+                "          livro, não hesite em nos visitar.\n" +
+                "        </p>\n" +
                 "      </div>\n" +
                 "      <div class=\"footer\">\n" +
                 "        <p>Atenciosamente,<br />Livraria BookHub</p>\n" +

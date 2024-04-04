@@ -24,4 +24,11 @@ public class Email {
         this.emailFrom = System.getenv("MAIL_USERNAME");
     }
 
+    public Email(String userEmail, String subject) {
+        this.ownerRef = "BookHub - Livraria";
+        this.emailFrom = System.getenv("MAIL_USERNAME");
+        this.emailTo = userEmail;
+        this.subject = subject;
+    }
+
 }
