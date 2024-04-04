@@ -28,4 +28,9 @@ public class UserController {
         return ResponseEntity.ok(userService.create(new User(userDTO)));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findUser(id));
+    }
+
 }
