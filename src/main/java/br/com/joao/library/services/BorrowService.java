@@ -8,6 +8,7 @@ import br.com.joao.library.repositories.BorrowRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 public class BorrowService {
@@ -22,6 +23,10 @@ public class BorrowService {
         this.borrowRepository = borrowRepository;
         this.userService = userService;
         this.bookService = bookService;
+    }
+
+    public Borrow findBorrow(Long id) {
+        return borrowRepository.findById(id).orElseThrow(() -> new RuntimeException("Borrow not found"));
     }
 
     public Borrow borrowBook(BorrowDTO userId, Long bookId) {
@@ -40,6 +45,24 @@ public class BorrowService {
         borrow.setBook(book);
         return borrowRepository.save(borrow);
     }
+
+    public void returnBook(Long userId, Long bookId) {
+        User user = userService.findUser(userId);
+        Book book = bookService.findBookById(bookId);
+
+        Borrow borrow = findBorrowByBook(book);
+
+        if (borrow == null)
+            throw new RuntimeException("This book aren't borrowed");
+
+        if (!Objects.equals(borrow.getBorrowedTo(), user.getEmail()))
+            throw new RuntimeException("This user dont borrowed this book");
+
+        book.setBorrow(null);
+        bookService.updateBook(book.getId(), book);
+        borrowRepository.deleteById(borrow.getId());
+    }
+
 
     public Borrow findBorrowByBook(Book book) {
         return borrowRepository.findBorrowByBook(book);
