@@ -1,7 +1,7 @@
 <h1 align="center" style="font-weight: bold;">BookHub-API 📚</h1>
 
 <p align="center">
- <a href="#tech">Tecnologias</a> • 
+ <a href="#technologies">Tecnologias</a> • 
  <a href="#started">Começando</a> • 
  <a href="#routes">API Endpoints</a>
 </p>
@@ -10,7 +10,7 @@
     <b>API de uma biblioteca que empresta livros e dispara e-mails para os usuários que pegarem/devolverem um livro</b>
 </p>
 
-<h2 id="technologies">💻 Technologies</h2>
+<h2 id="technologies">💻 Tecnologias</h2>
 
 - Java
 - Spring
