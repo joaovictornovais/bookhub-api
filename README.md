@@ -67,8 +67,8 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 | <kbd>DELETE /books/{id}/borrow?userId={userId}</kbd>     | desvincular (confirmar devolução) livro de um usuário (userId)
 | <kbd>POST /books/categories</kbd>     | cadastrar nova categoria 
 | <kbd>GET /books/categories</kbd>     | retorna lista de categorias
-| <kbd>POST /books/id/categories</kbd>     | vincular categoria a um livro
-| <kbd>DELETE /books/id/categories</kbd>     | desvincular categoria de um livro
+| <kbd>POST /books/{id}/categories</kbd>     | vincular categoria a um livro
+| <kbd>DELETE /books/{id}/categories</kbd>     | desvincular categoria de um livro
 
 <h3 id="get-users-details">GET /users</h3>
 
