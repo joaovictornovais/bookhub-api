@@ -43,7 +43,7 @@ MAIL_PASSWORD={SENHA_DE_APP_DO_SEU_EMAIL}
 <h3>Iniciando</h3>
 
 ```bash
-$ cd project-name
+$ cd bookhub-api
 $ ./mvnw clean-package
 ```
 
