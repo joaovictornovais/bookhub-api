@@ -44,7 +44,7 @@ MAIL_PASSWORD={SENHA_DE_APP_DO_SEU_EMAIL}
 
 ```bash
 $ cd bookhub-api
-$ ./mvnw clean-package
+$ ./mvnw clean package
 ```
 
 Executar a aplicação
