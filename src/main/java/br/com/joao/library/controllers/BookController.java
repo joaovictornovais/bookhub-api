@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class BookController {
 
     private final BookService bookService;
