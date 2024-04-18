@@ -29,4 +29,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.findAll());
     }
 
+    @GetMapping(params = "name")
+    public ResponseEntity<Category> findCategoryByName(@RequestParam("name") String name) {
+        return ResponseEntity.ok(categoryService.findCategoryByName(name));
+    }
+
 }

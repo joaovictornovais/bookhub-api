@@ -55,20 +55,21 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 <h2 id="routes">📍 API Endpoints</h2>
 ​
 
-| Rota               | Descrição                                          
-|----------------------|-----------------------------------------------------
-| <kbd>GET /users</kbd>     | retorna lista de usuários
-| <kbd>POST /users</kbd>     | cadastra um novo usuário
-| <kbd>GET /users/{id}</kbd>     | retorna um usuário específico
-| <kbd>GET /books</kbd>     | retorna lista de livros
-| <kbd>POST /books</kbd>     | cadastra um novo livro
-| <kbd>GET /books/{id}</kbd>     | retorn um livro específico
-| <kbd>POST /books/{id}/borrow</kbd>     | vincular (emprestar) livro para um usuário(userId) especificado no corpo da requisição
-| <kbd>DELETE /books/{id}/borrow?userId={userId}</kbd>     | desvincular (confirmar devolução) livro de um usuário (userId)
-| <kbd>POST /books/categories</kbd>     | cadastrar nova categoria 
-| <kbd>GET /books/categories</kbd>     | retorna lista de categorias
-| <kbd>POST /books/{id}/categories</kbd>     | vincular categoria a um livro
-| <kbd>DELETE /books/{id}/categories</kbd>     | desvincular categoria de um livro
+| Rota                                                 | Descrição                                          
+|------------------------------------------------------|-----------------------------------------------------
+| <kbd>GET /users</kbd>                                | retorna lista de usuários
+| <kbd>POST /users</kbd>                               | cadastra um novo usuário
+| <kbd>GET /users/{id}</kbd>                           | retorna um usuário específico
+| <kbd>GET /books</kbd>                                | retorna lista de livros
+| <kbd>POST /books</kbd>                               | cadastra um novo livro
+| <kbd>GET /books/{id}</kbd>                           | retorn um livro específico
+| <kbd>POST /books/{id}/borrow</kbd>                   | vincular (emprestar) livro para um usuário(userId) especificado no corpo da requisição
+| <kbd>DELETE /books/{id}/borrow?userId={userId}</kbd> | desvincular (confirmar devolução) livro de um usuário (userId)
+| <kbd>POST /books/categories</kbd>                    | cadastrar nova categoria 
+| <kbd>GET /books/categories</kbd>                     | retorna lista de categorias
+| <kbd>GET /books/categories?name={categoryName}</kbd> | retorna uma categoria específica
+| <kbd>POST /books/{id}/categories</kbd>               | vincular categoria a um livro
+| <kbd>DELETE /books/{id}/categories</kbd>             | desvincular categoria de um livro
 
 <h3 id="get-users-details">GET /users</h3>
 
@@ -209,10 +210,20 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 ```
 [
     {
-        "id": 1,
+        "id": 202,
         "name": "Mangá"
     }
 ]
+```
+
+<h3 id="get-category-detail">GET /books/categories?name=Mangá</h3>
+
+**RESPONSE**
+```
+{
+  "id": 202,
+  "name": "Mangá"
+}
 ```
 
 <h3 id="post-bookcategory-details">POST /books/id/categories</h3>

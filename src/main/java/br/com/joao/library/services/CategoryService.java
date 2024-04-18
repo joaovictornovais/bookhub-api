@@ -27,4 +27,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findCategoryByNameEqualsIgnoreCase(name);
+    }
+
 }
