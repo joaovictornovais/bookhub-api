@@ -58,6 +58,7 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 | Rota                                                 | Descrição                                          
 |------------------------------------------------------|-----------------------------------------------------
 | <kbd>GET /users</kbd>                                | retorna lista de usuários
+| <kbd>GET /users?email={email}                        | retorna usuário específico a partir do e-mail
 | <kbd>POST /users</kbd>                               | cadastra um novo usuário
 | <kbd>GET /users/{id}</kbd>                           | retorna um usuário específico
 | <kbd>GET /books</kbd>                                | retorna lista de livros
@@ -72,6 +73,21 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 | <kbd>DELETE /books/{id}/categories</kbd>             | desvincular categoria de um livro
 
 <h3 id="get-users-details">GET /users</h3>
+
+**RESPONSE**
+```json
+[
+    {
+        "id": 4,
+        "firstName": "João Victor",
+        "lastName": "Novais",
+        "email": "joaovkt.novais@gmail.com",
+        "borrows": []
+    }
+]
+```
+
+<h3 id="get-user-details">GET /users?email={email}</h3>
 
 **RESPONSE**
 ```json
@@ -188,7 +204,7 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 }
 ```
 
-<h3 id="post-borrow-details">DELETE /books/id/borrow?userId=4</h3>
+<h3 id="post-borrow-details">DELETE /books/id/borrow?userId={userId}</h3>
 
 **RESPONSE**
 ```
@@ -216,7 +232,7 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 ]
 ```
 
-<h3 id="get-category-detail">GET /books/categories?name=Mangá</h3>
+<h3 id="get-category-detail">GET /books/categories?name={categoryName}</h3>
 
 **RESPONSE**
 ```

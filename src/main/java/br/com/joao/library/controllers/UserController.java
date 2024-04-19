@@ -24,6 +24,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
+    @GetMapping(params = "email")
+    public ResponseEntity<User> findUserByEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(userService.findUserByEmail(email));
+    }
+
     @PostMapping
     public ResponseEntity<User> create(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.create(new User(userDTO)));
