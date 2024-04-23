@@ -29,7 +29,7 @@ public class CategoryService {
     }
 
     public Optional<Category> findCategoryByName(String name) {
-        Optional<Category> category = categoryRepository.findCategoryByNameEqualsIgnoreCase(name);
+        Optional<Category> category = categoryRepository.findCategoryByNameIgnoreCase(name);
         if (category.isPresent()) return category;
         throw new RuntimeException("Category not found");
     }
