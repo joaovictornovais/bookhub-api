@@ -5,6 +5,7 @@ import br.com.joao.library.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,8 +28,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findUserByEmail(String email){
-        return userRepository.findUserByEmail(email);
+    public Optional<User> findUserByEmail(String email){
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if (user.isPresent()) return user;
+        throw new RuntimeException("User not found");
     }
 
 }

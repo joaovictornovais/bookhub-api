@@ -5,6 +5,7 @@ import br.com.joao.library.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -27,8 +28,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category findCategoryByName(String name) {
-        return categoryRepository.findCategoryByNameEqualsIgnoreCase(name);
+    public Optional<Category> findCategoryByName(String name) {
+        Optional<Category> category = categoryRepository.findCategoryByNameEqualsIgnoreCase(name);
+        if (category.isPresent()) return category;
+        throw new RuntimeException("Category not found");
     }
 
 }

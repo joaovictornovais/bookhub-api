@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/books/categories")
@@ -30,7 +31,7 @@ public class CategoryController {
     }
 
     @GetMapping(params = "name")
-    public ResponseEntity<Category> findCategoryByName(@RequestParam("name") String name) {
+    public ResponseEntity<Optional<Category>> findCategoryByName(@RequestParam("name") String name) {
         return ResponseEntity.ok(categoryService.findCategoryByName(name));
     }
 

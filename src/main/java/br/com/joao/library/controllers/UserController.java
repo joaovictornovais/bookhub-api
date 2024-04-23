@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping(params = "email")
-    public ResponseEntity<User> findUserByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<Optional<User>> findUserByEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
