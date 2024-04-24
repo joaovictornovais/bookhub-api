@@ -10,6 +10,7 @@ import br.com.joao.library.services.BookService;
 import br.com.joao.library.services.BorrowService;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,38 +40,38 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> findBookById(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.findBookById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.findBookById(id));
     }
 
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody @Valid BookDTO bookDTO) {
-        return ResponseEntity.ok(bookService.createBook(new Book(bookDTO)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(new Book(bookDTO)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> editBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
-        return ResponseEntity.ok(bookService.editBook(id, bookDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.editBook(id, bookDTO));
     }
 
     @PostMapping("/{id}/categories")
     public ResponseEntity<Book> addCategory(@PathVariable Long id, @RequestBody BookCategoryDTO bookCategoryDTO) {
-        return ResponseEntity.ok(bookCategoryService.addCategory(id, bookCategoryDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(bookCategoryService.addCategory(id, bookCategoryDTO));
     }
 
     @DeleteMapping("/{id}/categories")
     public ResponseEntity<Book> removeCategory(@PathVariable Long id, @RequestBody BookCategoryDTO bookCategoryDTO) {
         bookCategoryService.removeCategory(id, bookCategoryDTO);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PostMapping("/{id}/borrow")
     public ResponseEntity<Borrow> borrowBook(@PathVariable Long id, @RequestBody BorrowDTO borrowDTO) {
-        return ResponseEntity.ok(borrowService.borrowBook(borrowDTO, id));
+        return ResponseEntity.status(HttpStatus.OK).body(borrowService.borrowBook(borrowDTO, id));
     }
 
     @DeleteMapping("/{id}/borrow")
     public ResponseEntity<Void> returnBook(@PathVariable Long id, @RequestParam("userId") Long userId) {
         borrowService.returnBook(userId, id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

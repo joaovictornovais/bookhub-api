@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping(params = "email")
     public ResponseEntity<User> findUserByEmail(@RequestParam("email") String email) {
-        return ResponseEntity.ok(userService.findUserByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findUserByEmail(email));
     }
 
     @PostMapping
@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.findUser(id));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findUser(id));
     }
 
 }
