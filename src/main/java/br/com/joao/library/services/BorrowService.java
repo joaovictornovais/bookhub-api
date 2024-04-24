@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class BorrowService {
@@ -46,8 +47,12 @@ public class BorrowService {
         User user = userService.findUser(userId.userId());
         Book book = bookService.findBookById(bookId);
 
-        if (findBorrowByBook(book) != null)
-            throw new RuntimeException("Book already borrowed");
+        try {
+            if (findBorrowByBook(book) != null)
+                throw new RuntimeException("Book already borrowed");
+        } catch (RuntimeException e) {
+            System.out.println("Book available to borrow");
+        }
 
         if (user.getBorrows().size() == 3)
             throw new RuntimeException("This user already borrowed 3 books");
@@ -87,9 +92,6 @@ public class BorrowService {
 
         Borrow borrow = findBorrowByBook(book);
 
-        if (borrow == null)
-            throw new RuntimeException("This book aren't borrowed");
-
         if (!Objects.equals(borrow.getBorrowedTo(), user.getEmail()))
             throw new RuntimeException("This user dont borrowed this book");
 
@@ -114,7 +116,9 @@ public class BorrowService {
     }
 
     public Borrow findBorrowByBook(Book book) {
-        return borrowRepository.findBorrowByBook(book);
+        Optional<Borrow> borrow = borrowRepository.findBorrowByBook(book);
+        if (borrow.isPresent()) return borrow.get();
+        throw new RuntimeException("Book aren't borrowed");
     }
 
 }
