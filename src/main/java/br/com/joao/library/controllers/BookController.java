@@ -8,6 +8,7 @@ import br.com.joao.library.domain.borrow.BorrowDTO;
 import br.com.joao.library.services.BookCategoryService;
 import br.com.joao.library.services.BookService;
 import br.com.joao.library.services.BorrowService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

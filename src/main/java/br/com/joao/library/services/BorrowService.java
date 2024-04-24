@@ -5,9 +5,12 @@ import br.com.joao.library.domain.borrow.Borrow;
 import br.com.joao.library.domain.borrow.BorrowDTO;
 import br.com.joao.library.domain.email.Email;
 import br.com.joao.library.domain.user.User;
+import br.com.joao.library.exceptions.EntityNotFoundException;
+import br.com.joao.library.exceptions.InvalidArgumentsException;
 import br.com.joao.library.repositories.BorrowRepository;
 import br.com.joao.library.util.emails.EmailBorrow;
 import br.com.joao.library.util.emails.EmailReturn;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -47,15 +50,11 @@ public class BorrowService {
         User user = userService.findUser(userId.userId());
         Book book = bookService.findBookById(bookId);
 
-        try {
-            if (findBorrowByBook(book) != null)
-                throw new RuntimeException("Book already borrowed");
-        } catch (RuntimeException e) {
-            System.out.println("Book available to borrow");
-        }
+        if (findBorrowByBook(book) != null)
+            throw new InvalidArgumentsException("Book already borrowed");
 
         if (user.getBorrows().size() == 3)
-            throw new RuntimeException("This user already borrowed 3 books");
+            throw new InvalidArgumentsException("This user already borrowed 3 books");
 
         Borrow borrow = new Borrow();
         borrow.setDue(LocalDateTime.now().plusDays(30));
@@ -93,7 +92,7 @@ public class BorrowService {
         Borrow borrow = findBorrowByBook(book);
 
         if (!Objects.equals(borrow.getBorrowedTo(), user.getEmail()))
-            throw new RuntimeException("This user dont borrowed this book");
+            throw new InvalidArgumentsException("This user dont borrowed this book");
 
         emailReturnBook(user, book, borrow);
 
@@ -116,9 +115,7 @@ public class BorrowService {
     }
 
     public Borrow findBorrowByBook(Book book) {
-        Optional<Borrow> borrow = borrowRepository.findBorrowByBook(book);
-        if (borrow.isPresent()) return borrow.get();
-        throw new RuntimeException("Book aren't borrowed");
+        return borrowRepository.findBorrowByBook(book).orElse(null);
     }
 
 }

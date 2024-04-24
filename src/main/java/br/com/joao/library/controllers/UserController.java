@@ -3,11 +3,12 @@ package br.com.joao.library.controllers;
 import br.com.joao.library.domain.user.User;
 import br.com.joao.library.domain.user.UserDTO;
 import br.com.joao.library.services.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -26,13 +27,13 @@ public class UserController {
     }
 
     @GetMapping(params = "email")
-    public ResponseEntity<Optional<User>> findUserByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<User> findUserByEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.create(new User(userDTO)));
+    public ResponseEntity<User> create(@RequestBody @Valid UserDTO userDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(new User(userDTO)));
     }
 
     @GetMapping("/{id}")

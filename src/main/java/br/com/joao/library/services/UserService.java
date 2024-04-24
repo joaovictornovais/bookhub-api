@@ -1,7 +1,10 @@
 package br.com.joao.library.services;
 
 import br.com.joao.library.domain.user.User;
+import br.com.joao.library.exceptions.EntityNotFoundException;
+import br.com.joao.library.exceptions.InvalidArgumentsException;
 import br.com.joao.library.repositories.UserRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,7 @@ public class UserService {
     }
 
     public User findUser(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("ERROR: User not found"));
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     public List<User> findAll() {
@@ -25,13 +28,17 @@ public class UserService {
     }
 
     public User create(User user) {
-        return userRepository.save(user);
+        try {
+            findUserByEmail(user.getEmail());
+            throw new InvalidArgumentsException("E-mail already registered");
+        } catch (EntityNotFoundException e) {
+            return userRepository.save(user);
+        }
     }
 
-    public Optional<User> findUserByEmail(String email){
-        Optional<User> user = userRepository.findUserByEmail(email);
-        if (user.isPresent()) return user;
-        throw new RuntimeException("User not found");
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email).orElseThrow(() ->
+                new EntityNotFoundException("User with email '" + email + "' not found"));
     }
 
 }

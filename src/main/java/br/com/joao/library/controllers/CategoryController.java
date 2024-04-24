@@ -31,7 +31,7 @@ public class CategoryController {
     }
 
     @GetMapping(params = "name")
-    public ResponseEntity<Optional<Category>> findCategoryByName(@RequestParam("name") String name) {
+    public ResponseEntity<Category> findCategoryByName(@RequestParam("name") String name) {
         return ResponseEntity.ok(categoryService.findCategoryByName(name));
     }
 
