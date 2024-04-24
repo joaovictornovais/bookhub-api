@@ -1,9 +1,8 @@
 package br.com.joao.library.domain.email;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 

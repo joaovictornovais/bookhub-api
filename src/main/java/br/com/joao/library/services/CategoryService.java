@@ -34,4 +34,8 @@ public class CategoryService {
         throw new RuntimeException("Category not found");
     }
 
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
+    }
+
 }

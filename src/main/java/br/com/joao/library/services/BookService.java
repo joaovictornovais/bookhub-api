@@ -1,8 +1,8 @@
 package br.com.joao.library.services;
 
 import br.com.joao.library.domain.book.Book;
+import br.com.joao.library.domain.book.BookDTO;
 import br.com.joao.library.repositories.BookRepository;
-import br.com.joao.library.repositories.CategoryRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +33,12 @@ public class BookService {
         Book book = findBookById(id);
         BeanUtils.copyProperties(bookDTO, book);
         book.setId(id);
+        return bookRepository.save(book);
+    }
+
+    public Book editBook(Long id, BookDTO bookDTO) {
+        Book book = findBookById(id);
+        BeanUtils.copyProperties(bookDTO, book);
         return bookRepository.save(book);
     }
 

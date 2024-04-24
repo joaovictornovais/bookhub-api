@@ -1,6 +1,5 @@
 package br.com.joao.library.domain.user;
 
-import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.borrow.Borrow;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

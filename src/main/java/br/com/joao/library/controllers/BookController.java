@@ -1,7 +1,6 @@
 package br.com.joao.library.controllers;
 
 import br.com.joao.library.domain.book.Book;
-import br.com.joao.library.domain.book.BookCategory;
 import br.com.joao.library.domain.book.BookCategoryDTO;
 import br.com.joao.library.domain.book.BookDTO;
 import br.com.joao.library.domain.borrow.Borrow;
@@ -44,6 +43,11 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
         return ResponseEntity.ok(bookService.createBook(new Book(bookDTO)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Book> editBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        return ResponseEntity.ok(bookService.editBook(id, bookDTO));
     }
 
     @PostMapping("/{id}/categories")

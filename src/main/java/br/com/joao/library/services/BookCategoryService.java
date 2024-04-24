@@ -4,9 +4,7 @@ import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.book.BookCategory;
 import br.com.joao.library.domain.book.BookCategoryDTO;
 import br.com.joao.library.domain.book.Category;
-import br.com.joao.library.domain.book.pk.BookCategoryPK;
 import br.com.joao.library.repositories.BookCategoryRepository;
-import br.com.joao.library.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 @Service
