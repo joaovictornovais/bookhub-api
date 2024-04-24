@@ -3,6 +3,7 @@ package br.com.joao.library.controllers;
 import br.com.joao.library.domain.book.Category;
 import br.com.joao.library.domain.book.CategoryDTO;
 import br.com.joao.library.services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
         return ResponseEntity.ok(categoryService.createCategory(new Category(categoryDTO)));
     }
 

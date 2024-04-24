@@ -8,6 +8,7 @@ import br.com.joao.library.domain.borrow.BorrowDTO;
 import br.com.joao.library.services.BookCategoryService;
 import br.com.joao.library.services.BookService;
 import br.com.joao.library.services.BorrowService;
+import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<Book> createBook(@RequestBody @Valid BookDTO bookDTO) {
         return ResponseEntity.ok(bookService.createBook(new Book(bookDTO)));
     }
 

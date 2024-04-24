@@ -1,6 +1,7 @@
 package br.com.joao.library.domain.book;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record BookDTO(
         @NotBlank(message = "Title should not be blank")
@@ -9,7 +10,7 @@ public record BookDTO(
         String author,
         @NotBlank(message = "Publisher should not be blank")
         String publisher,
-        @NotBlank(message = "Pages should not be blank")
+        @NotNull(message = "Pages should no be null")
         Integer pages,
         @NotBlank(message = "Cover should not be blank")
         String cover) {
