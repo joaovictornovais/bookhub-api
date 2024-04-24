@@ -3,6 +3,7 @@ package br.com.joao.library.domain.user;
 import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.borrow.Borrow;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
@@ -26,6 +27,7 @@ public class User {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 
