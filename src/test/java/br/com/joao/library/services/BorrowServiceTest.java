@@ -2,9 +2,7 @@ package br.com.joao.library.services;
 
 import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.borrow.Borrow;
-import br.com.joao.library.domain.borrow.BorrowDTO;
 import br.com.joao.library.domain.user.User;
-import br.com.joao.library.domain.user.UserDTO;
 import br.com.joao.library.exceptions.InvalidArgumentsException;
 import br.com.joao.library.repositories.BorrowRepository;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class BorrowServiceTest {
