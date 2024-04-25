@@ -4,11 +4,9 @@ import br.com.joao.library.domain.user.User;
 import br.com.joao.library.exceptions.EntityNotFoundException;
 import br.com.joao.library.exceptions.InvalidArgumentsException;
 import br.com.joao.library.repositories.UserRepository;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {

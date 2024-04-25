@@ -2,7 +2,6 @@ package br.com.joao.library.domain.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.UniqueElements;
 
 public record UserDTO(
         @NotBlank(message = "First Name should not be blank")
