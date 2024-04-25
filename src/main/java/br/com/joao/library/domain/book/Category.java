@@ -31,4 +31,9 @@ public class Category {
         BeanUtils.copyProperties(categoryDTO, this);
     }
 
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 }
