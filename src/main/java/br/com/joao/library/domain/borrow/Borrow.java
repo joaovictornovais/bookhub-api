@@ -37,11 +37,19 @@ public class Borrow {
     private Book book;
 
     public Borrow() {
-        setBorrowedIn(LocalDateTime.now());
+        this.borrowedIn = LocalDateTime.now();
     }
 
     public Borrow(BorrowDTO borrowDTO) {
         BeanUtils.copyProperties(borrowDTO, this);
+    }
+
+    public Borrow(Long id, User user, Book book) {
+        this.id = id;
+        this.borrowedIn = LocalDateTime.now();
+        this.due = LocalDateTime.now().plusDays(30);
+        this.borrowedTo = user;
+        this.book = book;
     }
 
     public String getBorrowedTo() {

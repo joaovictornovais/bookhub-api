@@ -50,6 +50,13 @@ public class Book {
         BeanUtils.copyProperties(bookDTO, this);
     }
 
-
+    public Book(Long id, String title, String author, String publisher, Integer pages, String cover) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.pages = pages;
+        this.cover = cover;
+    }
 
 }
