@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class CategoryServiceTest {
@@ -36,11 +37,12 @@ class CategoryServiceTest {
     @DisplayName("Should find a category successfully by ID")
     void findCategoryCase1() {
         Category category = new Category(1L, "Mangá");
-        categoryRepository.save(category);
-
-        verify(categoryRepository, times(1)).save(category);
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
 
+        Optional<Category> response = categoryRepository.findById(1L);
+
+        assertThat(response).isNotEmpty();
+        assertThat(response.get()).isEqualTo(category);
     }
 
     @Test
@@ -57,15 +59,17 @@ class CategoryServiceTest {
     @Test
     @DisplayName("Should create a category successfully")
     void createCategoryCase1() {
-        String categoryName = "Mangá";
-        Category category = new Category(1L, categoryName);
-
-        if (categoryRepository.findCategoryByNameIgnoreCase(categoryName).isPresent()) {
-            throw new InvalidArgumentsException("This category already exists");
-        }
-
+        Category category = new Category(1L, "Mangá");
         categoryRepository.save(category);
+
         verify(categoryRepository, times(1)).save(category);
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
+
+        Optional<Category> response = categoryRepository.findById(1L);
+
+        assertThat(response).isNotEmpty();
+        assertThat(response.get()).isEqualTo(category);
+
     }
 
     @Test
@@ -73,17 +77,15 @@ class CategoryServiceTest {
     void createCategoryCase2() {
         String categoryName = "Mangá";
         Category category = new Category(1L, categoryName);
-        categoryRepository.save(category);
 
-        verify(categoryRepository, times(1)).save(category);
         when(categoryRepository.findCategoryByNameIgnoreCase(categoryName)).thenReturn(Optional.of(category));
 
         Exception thrown = Assertions.assertThrows(InvalidArgumentsException.class, () -> {
-            if (categoryRepository.findCategoryByNameIgnoreCase(categoryName).isPresent()) {
-                throw new InvalidArgumentsException("This category already exists");
-            }
+           if (categoryRepository.findCategoryByNameIgnoreCase(categoryName).isPresent())
+               throw new InvalidArgumentsException("This category already exists");
         });
 
         Assertions.assertEquals("This category already exists", thrown.getMessage());
+
     }
 }
