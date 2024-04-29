@@ -2,6 +2,7 @@
 
 <p align="center">
  <a href="#technologies">Tecnologias</a> • 
+ <a href="#practices">Práticas adotadas</a> • 
  <a href="#started">Começando</a> • 
  <a href="#routes">API Endpoints</a>
 </p>
@@ -12,9 +13,17 @@
 
 <h2 id="technologies">💻 Tecnologias</h2>
 
-- Java
-- Spring
-- PostgreSQL
+- Java;
+- Spring;
+- PostgreSQL.
+
+<h2 id="practices">🧭 Práticas adotadas</h2>
+
+- API Rest;
+- SOLID;
+- Testes unitários;
+- Consultas com Spring Data JPA;
+- Tratamento de Exceções.
 
 <h2 id="started">🚀 Começando</h2>
 <h3>Pré-requisitos</h3>
