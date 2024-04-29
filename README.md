@@ -2,7 +2,7 @@
 
 <p align="center">
  <a href="#technologies">Tecnologias</a> • 
- <a href="practices">Práticas adotadas</a> • 
+ <a href="#practices">Práticas adotadas</a> • 
  <a href="#started">Começando</a> • 
  <a href="#routes">API Endpoints</a>
 </p>
