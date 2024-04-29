@@ -24,6 +24,7 @@
 - Testes unitários;
 - Consultas com Spring Data JPA;
 - Tratamento de Exceções.
+- Documentação Swagger com SpringDoc OpenAPI 3
 
 <h2 id="started">🚀 Começando</h2>
 <h3>Pré-requisitos</h3>
@@ -66,6 +67,7 @@ $ java -jar target/library-0.0.1-SNAPSHOT.jar
 
 | Rota                                                 | Descrição                                          
 |------------------------------------------------------|-----------------------------------------------------
+| <kbd>GET /swagger-ui/index.html                      | Página da documentação do SWAGGER
 | <kbd>GET /users</kbd>                                | retorna lista de usuários
 | <kbd>GET /users?email={email}                        | retorna usuário específico a partir do e-mail
 | <kbd>POST /users</kbd>                               | cadastra um novo usuário
