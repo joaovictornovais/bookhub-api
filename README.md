@@ -27,11 +27,13 @@
 - Documentação Swagger com SpringDoc OpenAPI 3
 
 <h2 id="started">🚀 Começando</h2>
+
+Você pode acessar o repositório do Front-ent da aplicação a partir [deste link](https://github.com/joaovictornovais/bookhub/)
+
 <h3>Pré-requisitos</h3>
 
 - [Java](https://www.java.com/pt-BR/)
 - [PostgreSQL](https://www.postgresql.org)
-- [BookHub](https://github.com/joaovictornovais/bookhub/)
 
 <h3>Clonando</h3>
 
