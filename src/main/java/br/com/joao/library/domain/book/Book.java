@@ -31,7 +31,7 @@ public class Book {
     @Column(nullable = false)
     private Integer pages;
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String cover;
+    private String imgUrl;
 
     @JsonManagedReference
     @ManyToMany
@@ -50,13 +50,13 @@ public class Book {
         BeanUtils.copyProperties(bookDTO, this);
     }
 
-    public Book(Long id, String title, String author, String publisher, Integer pages, String cover) {
+    public Book(Long id, String title, String author, String publisher, Integer pages, String imgUrl) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.pages = pages;
-        this.cover = cover;
+        this.imgUrl = imgUrl;
     }
 
 }

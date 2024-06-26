@@ -13,5 +13,5 @@ public record BookDTO(
         @NotNull(message = "Pages should no be null")
         Integer pages,
         @NotBlank(message = "Cover should not be blank")
-        String cover) {
+        String imgUrl) {
 }

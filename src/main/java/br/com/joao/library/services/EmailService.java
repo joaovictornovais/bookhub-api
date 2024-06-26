@@ -58,7 +58,7 @@ public class EmailService {
                 EmailBorrow.borrow(),
                 user.getFirstName(),
                 book.getTitle(),
-                book.getCover());
+                book.getImgUrl());
 
         baseText = baseText.replace("[[DATAEMPRESTIMO]]",
                 borrow.getBorrowedIn().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -73,7 +73,7 @@ public class EmailService {
         String subject = "Confirmação de Devolução: " + book.getTitle();
         Email email = createEmail(user.getEmail(), subject);
 
-        String baseText = editEmailBase(EmailReturn.returnBook(), user.getFirstName(), book.getTitle(), book.getCover());
+        String baseText = editEmailBase(EmailReturn.returnBook(), user.getFirstName(), book.getTitle(), book.getImgUrl());
 
         baseText = baseText.replace("[[DATAEMPRESTIMO]]", borrow.getBorrowedIn().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         baseText = baseText.replace("[[DATADEVOLVER]]", borrow.getDue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
