@@ -3,6 +3,7 @@ package br.com.joao.library.controllers;
 import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.book.BookCategoryDTO;
 import br.com.joao.library.domain.book.BookDTO;
+import br.com.joao.library.domain.book.BookRequestDTO;
 import br.com.joao.library.domain.borrow.Borrow;
 import br.com.joao.library.domain.borrow.BorrowDTO;
 import br.com.joao.library.services.BookCategoryService;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -54,9 +56,14 @@ public class BookController {
 
     @Operation(description = "Salva livro no banco de dados")
     @ApiResponse(responseCode = "201", description = "Livro salvo no banco de dados")
-    @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody @Valid BookDTO bookDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(new Book(bookDTO)));
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<Book> createBook(@RequestParam("title") String title,
+                                           @RequestParam("author") String author,
+                                           @RequestParam("publisher") String publisher,
+                                           @RequestParam("pages") Integer pages,
+                                           @RequestParam("image") MultipartFile image) {
+        BookRequestDTO data = new BookRequestDTO(title, author, publisher, pages, image);
+        return ResponseEntity.ok(bookService.createBook(data));
     }
 
     @Operation(description = "Edita informações de livro pré-existente")

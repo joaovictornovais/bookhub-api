@@ -59,4 +59,8 @@ public class Book {
         this.imgUrl = imgUrl;
     }
 
+    public Book(BookRequestDTO data) {
+        BeanUtils.copyProperties(data, this);
+    }
+
 }
