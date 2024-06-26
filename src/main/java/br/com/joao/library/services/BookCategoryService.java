@@ -8,6 +8,8 @@ import br.com.joao.library.exceptions.EntityNotFoundException;
 import br.com.joao.library.repositories.BookCategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class BookCategoryService {
 
@@ -28,14 +30,14 @@ public class BookCategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("Relation Book/Category not found"));
     }
 
-    public void removeCategory(Long id, BookCategoryDTO bookCategoryDTO) {
+    public void removeCategory(UUID id, BookCategoryDTO bookCategoryDTO) {
         Book book = bookService.findBookById(id);
         Category category = categoryService.findCategory(bookCategoryDTO.categoryId());
         BookCategory bookCategory = findBookCategory(book, category);
         bookCategoryRepository.deleteById(bookCategory.getId());
     }
 
-    public Book addCategory(Long id, BookCategoryDTO bookCategoryDTO) {
+    public Book addCategory(UUID id, BookCategoryDTO bookCategoryDTO) {
         Book book = bookService.findBookById(id);
         Category category = categoryService.findCategory(bookCategoryDTO.categoryId());
         bookCategoryRepository.save(new BookCategory(book, category));

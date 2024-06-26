@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 
@@ -44,13 +45,13 @@ class BorrowServiceTest {
     @Test
     @DisplayName("Should create a borrow successfully")
     void borrowBookCase1() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         Book book = new Book(
-                1L, "Chainsaw Man Vol. 12 ", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 12 ", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/71S1+C-tbUL._SY425_.jpg");
 
-        when(userService.findUser(1L)).thenReturn(user);
-        when(bookService.findBookById(1L)).thenReturn(book);
+        when(userService.findUser(user.getId())).thenReturn(user);
+        when(bookService.findBookById(book.getId())).thenReturn(book);
 
         Borrow borrow = new Borrow();
         borrow.setDue(LocalDateTime.now().plusDays(30));
@@ -67,13 +68,13 @@ class BorrowServiceTest {
     @Test
     @DisplayName("Should throw a exception when Book already borrowed")
     void borrowBookCase2() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         Book book = new Book(
-                1L, "Chainsaw Man Vol. 12 ", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 12 ", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/71S1+C-tbUL._SY425_.jpg");
 
-        when(bookService.findBookById(1L)).thenReturn(book);
-        when(userService.findUser(1L)).thenReturn(user);
+        when(bookService.findBookById(book.getId())).thenReturn(book);
+        when(userService.findUser(user.getId())).thenReturn(user);
 
         Borrow borrow = new Borrow();
         borrow.setDue(LocalDateTime.now().plusDays(30));
@@ -95,23 +96,23 @@ class BorrowServiceTest {
     @Test
     @DisplayName("Should throw exception when User already borrowed 3 books")
     void borrowBookCase3() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         Book book1 = new Book(
-                1L, "Chainsaw Man Vol. 12", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 12", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/71S1+C-tbUL._SY425_.jpg");
         Book book2 = new Book(
-                2L, "Chainsaw Man Vol. 11", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 11", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/61kC+ilwd3L._SY425_.jpg");
         Book book3 = new Book(
-                3L, "Chainsaw Man Vol. 3", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 3", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/517DFSH1+6L._SX342_SY445_.jpg");
         Book book4 = new Book(
-                4L, "Chainsaw Man Vol. 2", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 2", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/51sJMCzF6JS._SX342_SY445_.jpg");
 
-        Borrow borrow1 = new Borrow(1L, user, book1);
-        Borrow borrow2 = new Borrow(2L, user, book2);
-        Borrow borrow3 = new Borrow(3L, user, book3);
+        Borrow borrow1 = new Borrow(UUID.randomUUID(), user, book1);
+        Borrow borrow2 = new Borrow(UUID.randomUUID(), user, book2);
+        Borrow borrow3 = new Borrow(UUID.randomUUID(), user, book3);
         borrowRepository.save(borrow1);
         borrowRepository.save(borrow2);
         borrowRepository.save(borrow3);
@@ -137,12 +138,12 @@ class BorrowServiceTest {
     @Test
     @DisplayName("Should remove a borrow successfully")
     void returnBookCase1() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         Book book = new Book(
-                1L, "Chainsaw Man Vol. 12", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 12", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/71S1+C-tbUL._SY425_.jpg");
 
-        Borrow borrow = new Borrow(1L, user, book);
+        Borrow borrow = new Borrow(UUID.randomUUID(), user, book);
         user.getBorrows().add(borrow);
 
         if (!borrow.getBorrowedTo().equals(user.getEmail()))
@@ -152,24 +153,24 @@ class BorrowServiceTest {
         verify(emailService, times(1)).emailReturnBook(user, book, borrow);
 
         book.setBorrow(null);
-        bookService.updateBook(1L, book);
-        borrowRepository.deleteById(1L);
+        bookService.updateBook(book.getId(), book);
+        borrowRepository.deleteById(borrow.getId());
 
-        user.getBorrows().removeIf(id -> id.getId() == 1L);
+        user.getBorrows().removeIf(id -> id.getId() == borrow.getId());
 
-        verify(bookService, times(1)).updateBook(1L, book);
-        verify(borrowRepository, times(1)).deleteById(1L);
+        verify(bookService, times(1)).updateBook(book.getId(), book);
+        verify(borrowRepository, times(1)).deleteById(borrow.getId());
     }
 
     @Test
     @DisplayName("Should not remove a borrow when User dont borrowed this Book")
     void returnBookCase2() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         Book book = new Book(
-                1L, "Chainsaw Man Vol. 12", "Tatsuki Fujimoto", "Panini", 192,
+                UUID.randomUUID(), "Chainsaw Man Vol. 12", "Tatsuki Fujimoto", "Panini", 192,
                 "https://m.media-amazon.com/images/I/71S1+C-tbUL._SY425_.jpg");
 
-        Borrow borrow = new Borrow(1L, user, book);
+        Borrow borrow = new Borrow(UUID.randomUUID(), user, book);
         user.getBorrows().add(borrow);
 
         Exception thrown = Assertions.assertThrows(InvalidArgumentsException.class, () -> {

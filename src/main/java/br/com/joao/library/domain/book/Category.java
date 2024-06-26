@@ -7,9 +7,10 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,7 +20,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -31,7 +32,7 @@ public class Category {
         BeanUtils.copyProperties(categoryDTO, this);
     }
 
-    public Category(Long id, String name) {
+    public Category(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

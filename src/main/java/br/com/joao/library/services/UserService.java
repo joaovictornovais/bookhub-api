@@ -7,6 +7,7 @@ import br.com.joao.library.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -17,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findUser(Long id) {
+    public User findUser(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 

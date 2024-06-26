@@ -11,9 +11,10 @@ import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
-@Table(name = "borrows")
+@Table(name = "borrow")
 @AllArgsConstructor
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class Borrow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     private LocalDateTime borrowedIn;
     private LocalDateTime due;
@@ -44,7 +45,7 @@ public class Borrow {
         BeanUtils.copyProperties(borrowDTO, this);
     }
 
-    public Borrow(Long id, User user, Book book) {
+    public Borrow(UUID id, User user, Book book) {
         this.id = id;
         this.borrowedIn = LocalDateTime.now();
         this.due = LocalDateTime.now().plusDays(30);

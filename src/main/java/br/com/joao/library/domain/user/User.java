@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -19,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String firstName;
@@ -35,7 +36,7 @@ public class User {
         BeanUtils.copyProperties(userDTO, this);
     }
 
-    public User(Long id, String firstName, String lastName, String email) {
+    public User(UUID id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

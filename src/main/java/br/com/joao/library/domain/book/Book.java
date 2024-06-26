@@ -8,9 +8,10 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -20,7 +21,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String title;
@@ -50,7 +51,7 @@ public class Book {
         BeanUtils.copyProperties(bookDTO, this);
     }
 
-    public Book(Long id, String title, String author, String publisher, Integer pages, String imgUrl) {
+    public Book(UUID id, String title, String author, String publisher, Integer pages, String imgUrl) {
         this.id = id;
         this.title = title;
         this.author = author;

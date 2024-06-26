@@ -1,4 +1,6 @@
 package br.com.joao.library.domain.borrow;
 
-public record BorrowDTO(Long userId) {
+import java.util.UUID;
+
+public record BorrowDTO(UUID userId) {
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -58,7 +59,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Usuário com ID informado não foi encontrado")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUser(@PathVariable Long id) {
+    public ResponseEntity<User> findUser(@PathVariable UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findUser(id));
     }
 

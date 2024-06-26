@@ -10,26 +10,27 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class BorrowService {
 
     private final BorrowRepository borrowRepository;
-    private final UserService userService;
     private final BookService bookService;
     private final EmailService emailService;
+    private final UserService userService;
 
     public BorrowService(BorrowRepository borrowRepository,
-                         UserService userService,
                          BookService bookService,
+                         UserService userService,
                          EmailService emailService) {
         this.borrowRepository = borrowRepository;
-        this.userService = userService;
         this.bookService = bookService;
+        this.userService = userService;
         this.emailService = emailService;
     }
 
-    public Borrow borrowBook(BorrowDTO userId, Long bookId) {
+    public Borrow borrowBook(BorrowDTO userId, UUID bookId) {
         User user = userService.findUser(userId.userId());
         Book book = bookService.findBookById(bookId);
 
@@ -49,7 +50,7 @@ public class BorrowService {
         return borrowRepository.save(borrow);
     }
 
-    public void returnBook(Long userId, Long bookId) {
+    public void returnBook(UUID userId, UUID bookId) {
         User user = userService.findUser(userId);
         Book book = bookService.findBookById(bookId);
 

@@ -7,6 +7,7 @@ import br.com.joao.library.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CategoryService {
@@ -17,7 +18,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category findCategory(Long id) {
+    public Category findCategory(UUID id) {
         return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category with ID '" + id + "' not found"));
     }
 
@@ -39,7 +40,7 @@ public class CategoryService {
                 -> new EntityNotFoundException("Category called '" + name + "' not found"));
     }
 
-    public void deleteCategory(Long id) {
+    public void deleteCategory(UUID id) {
         categoryRepository.deleteById(id);
     }
 

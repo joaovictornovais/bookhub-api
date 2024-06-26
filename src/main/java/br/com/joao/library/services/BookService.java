@@ -66,7 +66,7 @@ public class BookService {
         return convFile;
     }
 
-    public Book findBookById(Long id) {
+    public Book findBookById(UUID id) {
         return bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found"));
     }
 
@@ -74,21 +74,17 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book updateBook(Long id, Book bookDTO) {
+    public Book updateBook(UUID id, Book bookDTO) {
         Book book = findBookById(id);
         BeanUtils.copyProperties(bookDTO, book);
         book.setId(id);
         return bookRepository.save(book);
     }
 
-    public Book editBook(Long id, BookDTO bookDTO) {
+    public Book editBook(UUID id, BookDTO bookDTO) {
         Book book = findBookById(id);
         BeanUtils.copyProperties(bookDTO, book);
         return bookRepository.save(book);
-    }
-
-    public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
     }
 
 }
