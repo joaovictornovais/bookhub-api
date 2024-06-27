@@ -41,10 +41,6 @@ public class Borrow {
         this.borrowedIn = LocalDateTime.now();
     }
 
-    public Borrow(BorrowDTO borrowDTO) {
-        BeanUtils.copyProperties(borrowDTO, this);
-    }
-
     public Borrow(UUID id, User user, Book book) {
         this.id = id;
         this.borrowedIn = LocalDateTime.now();

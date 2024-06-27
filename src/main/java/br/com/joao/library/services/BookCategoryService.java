@@ -2,7 +2,7 @@ package br.com.joao.library.services;
 
 import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.category.BookCategory;
-import br.com.joao.library.domain.category.BookCategoryDTO;
+import br.com.joao.library.domain.category.BookCategoryRequestDTO;
 import br.com.joao.library.domain.category.Category;
 import br.com.joao.library.exceptions.EntityNotFoundException;
 import br.com.joao.library.repositories.BookCategoryRepository;
@@ -30,16 +30,16 @@ public class BookCategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("Relation Book/Category not found"));
     }
 
-    public void removeCategory(UUID id, BookCategoryDTO bookCategoryDTO) {
-        Book book = bookService.findBookById(id);
-        Category category = categoryService.findCategory(bookCategoryDTO.categoryId());
+    public void removeCategory(UUID bookId, UUID categoryId) {
+        Book book = bookService.findBookById(bookId);
+        Category category = categoryService.findCategory(categoryId);
         BookCategory bookCategory = findBookCategory(book, category);
         bookCategoryRepository.deleteById(bookCategory.getId());
     }
 
-    public Book addCategory(UUID id, BookCategoryDTO bookCategoryDTO) {
-        Book book = bookService.findBookById(id);
-        Category category = categoryService.findCategory(bookCategoryDTO.categoryId());
+    public Book addCategory(UUID bookId, BookCategoryRequestDTO data) {
+        Book book = bookService.findBookById(bookId);
+        Category category = categoryService.findCategory(data.categoryId());
         bookCategoryRepository.save(new BookCategory(book, category));
         return book;
     }

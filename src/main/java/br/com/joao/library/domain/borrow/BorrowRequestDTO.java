@@ -2,5 +2,5 @@ package br.com.joao.library.domain.borrow;
 
 import java.util.UUID;
 
-public record BorrowDTO(UUID userId) {
+public record BorrowRequestDTO(UUID userId) {
 }

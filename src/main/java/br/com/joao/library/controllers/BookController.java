@@ -1,11 +1,10 @@
 package br.com.joao.library.controllers;
 
 import br.com.joao.library.domain.book.Book;
-import br.com.joao.library.domain.category.BookCategoryDTO;
-import br.com.joao.library.domain.book.BookDTO;
 import br.com.joao.library.domain.book.BookRequestDTO;
 import br.com.joao.library.domain.borrow.Borrow;
-import br.com.joao.library.domain.borrow.BorrowDTO;
+import br.com.joao.library.domain.borrow.BorrowRequestDTO;
+import br.com.joao.library.domain.category.BookCategoryRequestDTO;
 import br.com.joao.library.services.BookCategoryService;
 import br.com.joao.library.services.BookService;
 import br.com.joao.library.services.BorrowService;
@@ -49,9 +48,9 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Retorna o livro"),
             @ApiResponse(responseCode = "404", description = "Não existe livro com o ID informado")
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<Book> findBookById(@PathVariable UUID id) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.findBookById(id));
+    @GetMapping("/{bookId}")
+    public ResponseEntity<Book> findBookById(@PathVariable UUID bookId) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.findBookById(bookId));
     }
 
     @Operation(description = "Salva livro no banco de dados")
@@ -72,16 +71,23 @@ public class BookController {
             @ApiResponse(responseCode = "404", description = "Livro não encontrado"),
             @ApiResponse(responseCode = "400", description = "Campos obrigatórios ficaram em branco ou nulos")
     })
-    @PutMapping("/{id}")
-    public ResponseEntity<Book> editBook(@PathVariable UUID id, @RequestBody BookDTO bookDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.editBook(id, bookDTO));
+    @PutMapping(value ="/{bookId}", consumes = "multipart/form-data")
+    public ResponseEntity<Book> editBook(@PathVariable UUID bookId,
+                                         @RequestParam("title") String title,
+                                         @RequestParam("author") String author,
+                                         @RequestParam("publisher") String publisher,
+                                         @RequestParam("pages") Integer pages,
+                                         @RequestParam("image") MultipartFile img
+                                         ){
+        BookRequestDTO data = new BookRequestDTO(title, author, publisher, pages, img);
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.editBook(bookId, data));
     }
 
     @Operation(description = "Adiciona cateogria a um livro")
     @ApiResponse(responseCode = "200", description = "Categoria adicionada com sucesso")
-    @PostMapping("/{id}/categories")
-    public ResponseEntity<Book> addCategory(@PathVariable UUID id, @RequestBody BookCategoryDTO bookCategoryDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookCategoryService.addCategory(id, bookCategoryDTO));
+    @PostMapping("/{bookId}/categories")
+    public ResponseEntity<Book> addCategory(@PathVariable UUID bookId, @RequestBody BookCategoryRequestDTO data) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookCategoryService.addCategory(bookId, data));
     }
 
 
@@ -90,9 +96,9 @@ public class BookController {
             @ApiResponse(responseCode = "204", description = "Categoria desassociada com sucesso"),
             @ApiResponse(responseCode = "400", description = "Esse livro não possui essa categoria associada")
     })
-    @DeleteMapping("/{id}/categories")
-    public ResponseEntity<Book> removeCategory(@PathVariable UUID id, @RequestBody BookCategoryDTO bookCategoryDTO) {
-        bookCategoryService.removeCategory(id, bookCategoryDTO);
+    @DeleteMapping("/{bookId}/categories")
+    public ResponseEntity<Book> removeCategory(@PathVariable UUID bookId, @RequestParam("categoryId") UUID categoryId) {
+        bookCategoryService.removeCategory(bookId, categoryId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -102,8 +108,8 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Esse livro já foi emprestado a outro usuário")
     })
     @PostMapping("/{id}/borrow")
-    public ResponseEntity<Borrow> borrowBook(@PathVariable UUID id, @RequestBody BorrowDTO borrowDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(borrowService.borrowBook(borrowDTO, id));
+    public ResponseEntity<Borrow> borrowBook(@PathVariable UUID id, @RequestBody BorrowRequestDTO data) {
+        return ResponseEntity.status(HttpStatus.OK).body(borrowService.borrowBook(id, data));
     }
 
     @Operation(description = "Indica que o usuário devolveu o livro")
@@ -111,9 +117,9 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Devolução realizada com sucesso"),
             @ApiResponse(responseCode = "400", description = "O livro não foi emprestado a esse usuário")
     })
-    @DeleteMapping("/{id}/borrow")
-    public ResponseEntity<Void> returnBook(@PathVariable UUID id, @RequestParam("userId") UUID userId) {
-        borrowService.returnBook(userId, id);
+    @DeleteMapping("/{bookId}/borrow")
+    public ResponseEntity<Void> returnBook(@PathVariable UUID bookId, @RequestParam("userId") UUID userId) {
+        borrowService.returnBook(bookId, userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

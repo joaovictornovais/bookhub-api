@@ -2,7 +2,7 @@ package br.com.joao.library.services;
 
 import br.com.joao.library.domain.book.Book;
 import br.com.joao.library.domain.borrow.Borrow;
-import br.com.joao.library.domain.borrow.BorrowDTO;
+import br.com.joao.library.domain.borrow.BorrowRequestDTO;
 import br.com.joao.library.domain.user.User;
 import br.com.joao.library.exceptions.InvalidArgumentsException;
 import br.com.joao.library.repositories.BorrowRepository;
@@ -30,8 +30,8 @@ public class BorrowService {
         this.emailService = emailService;
     }
 
-    public Borrow borrowBook(BorrowDTO userId, UUID bookId) {
-        User user = userService.findUser(userId.userId());
+    public Borrow borrowBook(UUID bookId, BorrowRequestDTO data) {
+        User user = userService.findUser(data.userId());
         Book book = bookService.findBookById(bookId);
 
         if (findBorrowByBook(book) != null)
@@ -50,7 +50,7 @@ public class BorrowService {
         return borrowRepository.save(borrow);
     }
 
-    public void returnBook(UUID userId, UUID bookId) {
+    public void returnBook(UUID bookId, UUID userId) {
         User user = userService.findUser(userId);
         Book book = bookService.findBookById(bookId);
 
@@ -61,8 +61,6 @@ public class BorrowService {
 
         emailService.emailReturnBook(user, book, borrow);
 
-        book.setBorrow(null);
-        bookService.updateBook(book.getId(), book);
         borrowRepository.deleteById(borrow.getId());
     }
 

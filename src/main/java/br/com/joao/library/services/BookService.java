@@ -46,7 +46,7 @@ public class BookService {
     }
 
     private String uploadImg(MultipartFile multipartFile) {
-        String fileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+        String fileName = UUID.randomUUID() + "-" + UUID.randomUUID();
         try {
             File file = convertMultipartToFile(multipartFile);
             s3Client.putObject(bucketName, fileName, file);
@@ -67,23 +67,19 @@ public class BookService {
     }
 
     public Book findBookById(UUID id) {
-        return bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found"));
+        return bookRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Book not found"));
     }
 
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
-    public Book updateBook(UUID id, Book bookDTO) {
+    public Book editBook(UUID id, BookRequestDTO data) {
         Book book = findBookById(id);
-        BeanUtils.copyProperties(bookDTO, book);
-        book.setId(id);
-        return bookRepository.save(book);
-    }
-
-    public Book editBook(UUID id, BookDTO bookDTO) {
-        Book book = findBookById(id);
-        BeanUtils.copyProperties(bookDTO, book);
+        BeanUtils.copyProperties(data, book);
+        if (data.img() != null)
+            book.setImgUrl(uploadImg(data.img()));
         return bookRepository.save(book);
     }
 
