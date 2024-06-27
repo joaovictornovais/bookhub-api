@@ -1,6 +1,7 @@
-package br.com.joao.library.domain.book;
+package br.com.joao.library.domain.category;
 
-import br.com.joao.library.domain.book.pk.BookCategoryPK;
+import br.com.joao.library.domain.book.Book;
+import br.com.joao.library.domain.category.pk.BookCategoryPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

@@ -1,7 +1,7 @@
 package br.com.joao.library.controllers;
 
 import br.com.joao.library.domain.book.Book;
-import br.com.joao.library.domain.book.BookCategoryDTO;
+import br.com.joao.library.domain.category.BookCategoryDTO;
 import br.com.joao.library.domain.book.BookDTO;
 import br.com.joao.library.domain.book.BookRequestDTO;
 import br.com.joao.library.domain.borrow.Borrow;
@@ -12,7 +12,6 @@ import br.com.joao.library.services.BorrowService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

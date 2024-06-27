@@ -1,6 +1,7 @@
 package br.com.joao.library.domain.book;
 
 import br.com.joao.library.domain.borrow.Borrow;
+import br.com.joao.library.domain.category.Category;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;

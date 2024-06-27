@@ -1,5 +1,6 @@
-package br.com.joao.library.domain.book;
+package br.com.joao.library.domain.category;
 
+import br.com.joao.library.domain.book.Book;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,13 +29,13 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new HashSet<>();
 
-    public Category(CategoryDTO categoryDTO) {
-        BeanUtils.copyProperties(categoryDTO, this);
-    }
-
     public Category(UUID id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Category(CategoryRequestDTO categoryRequestDTO) {
+        BeanUtils.copyProperties(categoryRequestDTO, this);
     }
 
 }

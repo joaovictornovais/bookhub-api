@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -38,13 +39,13 @@ class BookServiceTest {
     @Test
     @DisplayName("Should create a Book successfully")
     void createBookCase1() {
-        Book book = new Book(1L, "Livro 1", "John Doe", "Editora Xis", 192, "cover.jpg");
+        Book book = new Book(UUID.randomUUID(), "Livro 1", "John Doe", "Editora Xis", 192, "cover.jpg");
         bookRepository.save(book);
 
         verify(bookRepository, times(1)).save(book);
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
-        Optional<Book> response = bookRepository.findById(1L);
+        Optional<Book> response = bookRepository.findById(book.getId());
 
         assertThat(response).isPresent();
         assertThat(response.get()).isEqualTo(book);
@@ -54,11 +55,11 @@ class BookServiceTest {
     @Test
     @DisplayName("Should find a book by ID successfully")
     void findBookByIdCase1() {
-        Book book = new Book(1L, "Livro 1", "John Doe", "Editora Xis", 192, "cover.jpg");
+        Book book = new Book(UUID.randomUUID(), "Livro 1", "John Doe", "Editora Xis", 192, "cover.jpg");
 
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
-        Optional<Book> response = bookRepository.findById(1L);
+        Optional<Book> response = bookRepository.findById(book.getId());
 
         assertThat(response).isPresent();
         assertThat(response.get()).isEqualTo(book);
@@ -68,10 +69,8 @@ class BookServiceTest {
     @Test
     @DisplayName("Should throw a exception when not found a book by ID")
     void findBookByIdCase2() {
-        Optional<Book> response = bookRepository.findById(1L);
-
         Exception thrown = Assertions.assertThrows(EntityNotFoundException.class, () -> {
-            if (bookRepository.findById(1L).isEmpty())
+            if (bookRepository.findById(UUID.randomUUID()).isEmpty())
                 throw new EntityNotFoundException("Book not found");
         });
 
@@ -81,9 +80,9 @@ class BookServiceTest {
     @Test
     @DisplayName("Should find all Books sucessfully")
     void findAllBooksCase1() {
-        Book book1 = new Book(1L, "Livro 1", "John Doe", "Editora X",
+        Book book1 = new Book(UUID.randomUUID(), "Livro 1", "John Doe", "Editora X",
                 192, "cover.jpg");
-        Book book2 = new Book(2L, "Livro 2", "John Doe", "Editora Y", 180,
+        Book book2 = new Book(UUID.randomUUID(), "Livro 2", "John Doe", "Editora Y", 180,
                 "cover-2.jpg");
 
         when(bookRepository.findAll()).thenReturn(List.of(book1, book2));
@@ -97,7 +96,7 @@ class BookServiceTest {
     @Test
     @DisplayName("Should edit a book sucessfully")
     void editBookCase1() {
-        Book book = new Book(1L, "Livro 1", "John Doe", "Editora X",
+        Book book = new Book(UUID.randomUUID(), "Livro 1", "John Doe", "Editora X",
                 192, "cover.jpg");
 
         BookDTO data = new BookDTO("Livro 1 - O retorno", "John Doe",
@@ -107,9 +106,9 @@ class BookServiceTest {
         bookRepository.save(book);
         verify(bookRepository, times(1)).save(book);
 
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
-        Optional<Book> response = bookRepository.findById(1L);
+        Optional<Book> response = bookRepository.findById(book.getId());
 
         assertThat(response).isPresent();
         assertThat(response.get().getTitle()).isEqualTo(data.title());

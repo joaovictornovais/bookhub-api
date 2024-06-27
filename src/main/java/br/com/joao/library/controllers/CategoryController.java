@@ -1,7 +1,7 @@
 package br.com.joao.library.controllers;
 
-import br.com.joao.library.domain.book.Category;
-import br.com.joao.library.domain.book.CategoryDTO;
+import br.com.joao.library.domain.category.Category;
+import br.com.joao.library.domain.category.CategoryRequestDTO;
 import br.com.joao.library.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/books/categories")
+@RequestMapping("/categories")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CategoryController {
 
@@ -31,8 +31,8 @@ public class CategoryController {
             @ApiResponse(responseCode = "400", description = "Já existe uma categoria com esse nome")
     })
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(new Category(categoryDTO)));
+    public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(categoryRequestDTO));
     }
 
     @Operation(description = "Busca todas as categorias salvas no banco de dados")

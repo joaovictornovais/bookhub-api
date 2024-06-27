@@ -1,6 +1,7 @@
 package br.com.joao.library.services;
 
-import br.com.joao.library.domain.book.Category;
+import br.com.joao.library.domain.category.Category;
+import br.com.joao.library.domain.category.CategoryRequestDTO;
 import br.com.joao.library.exceptions.EntityNotFoundException;
 import br.com.joao.library.exceptions.InvalidArgumentsException;
 import br.com.joao.library.repositories.CategoryRepository;
@@ -22,12 +23,12 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category with ID '" + id + "' not found"));
     }
 
-    public Category createCategory(Category category) {
+    public Category createCategory(CategoryRequestDTO data) {
         try {
-            findCategoryByName(category.getName());
+            findCategoryByName(data.name());
             throw new InvalidArgumentsException("This category already exists");
         } catch (EntityNotFoundException e) {
-            return categoryRepository.save(category);
+            return categoryRepository.save(new Category(data));
         }
     }
 

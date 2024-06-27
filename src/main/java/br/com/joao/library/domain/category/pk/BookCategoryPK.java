@@ -1,7 +1,7 @@
-package br.com.joao.library.domain.book.pk;
+package br.com.joao.library.domain.category.pk;
 
 import br.com.joao.library.domain.book.Book;
-import br.com.joao.library.domain.book.Category;
+import br.com.joao.library.domain.category.Category;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

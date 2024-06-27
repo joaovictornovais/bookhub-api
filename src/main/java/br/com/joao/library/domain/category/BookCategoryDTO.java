@@ -1,4 +1,4 @@
-package br.com.joao.library.domain.book;
+package br.com.joao.library.domain.category;
 
 import java.util.UUID;
 

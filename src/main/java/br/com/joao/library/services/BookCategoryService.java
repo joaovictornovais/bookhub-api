@@ -1,9 +1,9 @@
 package br.com.joao.library.services;
 
 import br.com.joao.library.domain.book.Book;
-import br.com.joao.library.domain.book.BookCategory;
-import br.com.joao.library.domain.book.BookCategoryDTO;
-import br.com.joao.library.domain.book.Category;
+import br.com.joao.library.domain.category.BookCategory;
+import br.com.joao.library.domain.category.BookCategoryDTO;
+import br.com.joao.library.domain.category.Category;
 import br.com.joao.library.exceptions.EntityNotFoundException;
 import br.com.joao.library.repositories.BookCategoryRepository;
 import org.springframework.stereotype.Service;
