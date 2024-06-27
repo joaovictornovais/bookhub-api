@@ -1,7 +1,7 @@
 package br.com.joao.library.repositories;
 
-import br.com.joao.library.domain.book.Category;
-import br.com.joao.library.domain.book.CategoryDTO;
+import br.com.joao.library.domain.category.Category;
+import br.com.joao.library.domain.category.CategoryRequestDTO;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class CategoryRepositoryTest {
     @DisplayName("Should get a category from DB")
     void findCategoryByNameCase1() {
         String categoryName = "Mangá";
-        CategoryDTO data = new CategoryDTO(categoryName);
+        CategoryRequestDTO data = new CategoryRequestDTO(categoryName);
         this.createCategory(data);
 
         Optional<Category> result = categoryRepository.findCategoryByNameIgnoreCase(categoryName);
@@ -44,7 +44,7 @@ class CategoryRepositoryTest {
         assertThat(result.isEmpty()).isTrue();
     }
 
-    private Category createCategory(CategoryDTO data) {
+    private Category createCategory(CategoryRequestDTO data) {
         Category newCategory = new Category(data);
         this.entityManager.persist(newCategory);
         return newCategory;

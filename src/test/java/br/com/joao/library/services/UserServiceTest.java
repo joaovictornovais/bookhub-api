@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -36,12 +37,13 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Should find a user by Id")
-    void findUserByIdCase1() {
-        User data = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+    void findUserByIdCase1()
+    {
+        User data = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(data));
+        when(userRepository.findById(data.getId())).thenReturn(Optional.of(data));
 
-        Optional<User> user = userRepository.findById(1L);
+        Optional<User> user = userRepository.findById(data.getId());
 
         assertThat(user).isNotEmpty();
         assertThat(user.get()).isEqualTo(data);
@@ -51,7 +53,7 @@ class UserServiceTest {
     @DisplayName("Should throw a exception when user not found")
     void findUserByIdCase2() {
         Exception thrown = Assertions.assertThrows(EntityNotFoundException.class, () -> {
-            if (userRepository.findById(1L).isEmpty())
+            if (userRepository.findById(UUID.randomUUID()).isEmpty())
                 throw new EntityNotFoundException("User not found");
         });
 
@@ -61,8 +63,8 @@ class UserServiceTest {
     @Test
     @DisplayName("Should return all users from DB")
     void findAllUsersCase1() {
-        User user1 = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
-        User user2 = new User(2L, "Matheus Henrique", "Meira", "mateus@gmail.com");
+        User user1 = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user2 = new User(UUID.randomUUID(), "Matheus Henrique", "Meira", "mateus@gmail.com");
 
         when(userRepository.findAll()).thenReturn(List.of(user1, user2));
 
@@ -76,12 +78,12 @@ class UserServiceTest {
     @Test
     @DisplayName("Should create a user successfully")
     void createUserCase1() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         userRepository.save(user);
         verify(userRepository, times(1)).save(user);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        Optional<User> response = userRepository.findById(1L);
+        Optional<User> response = userRepository.findById(user.getId());
 
         assertThat(response).isNotEmpty();
         assertThat(response.get()).isEqualTo(user);
@@ -90,10 +92,10 @@ class UserServiceTest {
     @Test
     @DisplayName("Should throw a exception when trying to create a user with an e-mail already registered")
     void createUserCase2() {
-        User user = new User(1L, "João Victor", "Novais", "joaovkt.novais@gmail.com");
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", "joaovkt.novais@gmail.com");
         when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
-        User user2 = new User(2L, "João Victor", "dos Santos", "joaovkt.novais@gmail.com");
+        User user2 = new User(UUID.randomUUID(), "João Victor", "dos Santos", "joaovkt.novais@gmail.com");
 
         Exception thrown = Assertions.assertThrows(InvalidArgumentsException.class, () -> {
             if (userRepository.findUserByEmail(user2.getEmail()).isPresent())
@@ -107,7 +109,7 @@ class UserServiceTest {
     @DisplayName("Should find a user by e-mail")
     void findUserByEmailCase1() {
         String email = "joaovkt.novais@gmail.com";
-        User user = new User(1L, "João Victor", "Novais", email);
+        User user = new User(UUID.randomUUID(), "João Victor", "Novais", email);
         when(userRepository.findUserByEmail(email)).thenReturn(Optional.of(user));
 
         Optional<User> response = userRepository.findUserByEmail(email);
