@@ -152,13 +152,10 @@ class BorrowServiceTest {
         emailService.emailReturnBook(user, book, borrow);
         verify(emailService, times(1)).emailReturnBook(user, book, borrow);
 
-        book.setBorrow(null);
-        bookService.updateBook(book.getId(), book);
         borrowRepository.deleteById(borrow.getId());
+        book.setBorrow(null);
 
         user.getBorrows().removeIf(id -> id.getId() == borrow.getId());
-
-        verify(bookService, times(1)).updateBook(book.getId(), book);
         verify(borrowRepository, times(1)).deleteById(borrow.getId());
     }
 
