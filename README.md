@@ -15,6 +15,7 @@
 
 - Java;
 - Spring;
+- AWS S3;
 - PostgreSQL.
 
 <h2 id="practices">🧭 Práticas adotadas</h2>
