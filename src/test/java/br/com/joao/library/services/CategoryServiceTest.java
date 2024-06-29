@@ -53,7 +53,7 @@ class CategoryServiceTest {
         UUID id = UUID.randomUUID();
         Exception thrown = Assertions.assertThrows(EntityNotFoundException.class, () -> {
             if (categoryRepository.findById(id).isEmpty())
-                throw new EntityNotFoundException("Category with ID '" + 1L + "' not found");
+                throw new EntityNotFoundException("Category with ID '" + id + "' not found");
         });
 
         Assertions.assertEquals("Category with ID '" + id + "' not found", thrown.getMessage());
