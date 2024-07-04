@@ -3,7 +3,7 @@
 <p align="center">
  <a href="#technologies">Tecnologias</a> • 
  <a href="#practices">Práticas adotadas</a> • 
- <a href="#started">Começando</a> • 
+ <a href="#started">Iniciando</a> • 
  <a href="#routes">API Endpoints</a>
 </p>
 
@@ -15,7 +15,9 @@
 
 - Java;
 - Spring;
+- Docker
 - AWS S3;
+- AWS EC2;
 - PostgreSQL.
 
 <h2 id="practices">🧭 Práticas adotadas</h2>
@@ -24,19 +26,32 @@
 - SOLID;
 - Testes unitários;
 - Consultas com Spring Data JPA;
-- Tratamento de Exceções.
-- Documentação Swagger com SpringDoc OpenAPI 3
+- Tratamento de Exceções;
+- Documentação Swagger com SpringDoc OpenAPI 3;
+- Deploy na AWS EC2;
+- Armazenamento de Imagens com AWS S3
+
 
 <h2 id="started">🚀 Iniciando</h2>
 
 Você pode acessar o repositório do Front-ent da aplicação a partir [deste link](https://github.com/joaovictornovais/bookhub/)
 
-<h3>Pré-requisitos</h3>
+<h2>Rodando com Docker</h2>
+
+<h4>Pré-requisitos</h4>
+
+- [Docker](https://www.docker.com/)
+
+```bash
+$ docker container run -p 80:8080 -e DB_URL={URL_DO_SEU_BANCO} -e DB_USERNAME={USERNAME_DO_SEU_BANCO} -e DB_PASSWORD={SENHA_DO_SEU_BANCO} -e MAIL_USERNAME={SEU_EMAIL@GMAIL.COM} -e MAIL_PASSWORD={SENHA_DE_APP_DO_SEU_EMAIL} joaovictornovais/bookhub-api
+```
+
+<h2>Rodando sem docker</h2>
+
+<h4>Pré-requisitos</h4>
 
 - [Java](https://www.java.com/pt-BR/)
 - [PostgreSQL](https://www.postgresql.org)
-
-<h3>Clonando</h3>
 
 ```bash
 git clone git@github.com:joaovictornovais/BookHub-API.git
@@ -44,12 +59,12 @@ git clone git@github.com:joaovictornovais/BookHub-API.git
 
 <h3>Configurando variáveis de ambiente</h2>
 
-```yaml
-DB_URL={URL_DO_SEU_BANCO}
-DB_USERNAME={USERNAME_DO_SEU_BANCO}
-DB_PASSWORD={SENHA_DO_SEU_BANCO}
-MAIL_USERNAME={SEU_EMAIL@GMAIL.COM}
-MAIL_PASSWORD={SENHA_DE_APP_DO_SEU_EMAIL}
+```bash
+$ DB_URL={URL_DO_SEU_BANCO}
+$ DB_USERNAME={USERNAME_DO_SEU_BANCO}
+$ DB_PASSWORD={SENHA_DO_SEU_BANCO}
+$ MAIL_USERNAME={SEU_EMAIL@GMAIL.COM}
+$ MAIL_PASSWORD={SENHA_DE_APP_DO_SEU_EMAIL}
 ```
 
 <p>Para descobrir a senha de app do seu email, acesse o artigo: https://support.google.com/accounts/answer/185833?hl=pt-BR </p>
