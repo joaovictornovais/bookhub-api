@@ -18,7 +18,8 @@
 - Docker
 - AWS S3;
 - AWS EC2;
-- PostgreSQL.
+- PostgreSQL;
+- Flyway.
 
 <h2 id="practices">🧭 Práticas adotadas</h2>
 
@@ -29,8 +30,8 @@
 - Tratamento de Exceções;
 - Documentação Swagger com SpringDoc OpenAPI 3;
 - Deploy na AWS EC2;
-- Armazenamento de Imagens com AWS S3
-
+- Armazenamento de Imagens com AWS S3;
+- Versionamento de banco de dados com o FlyWay
 
 <h2 id="started">🚀 Iniciando</h2>
 
